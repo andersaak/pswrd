@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
   <title>Secure Password Generator</title>
 
   <!-- Google Fonts -->
@@ -11,113 +11,245 @@
   <!-- CookieConsent CSS -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.css"/>
 
-  <!-- Styles… (same as before) -->
+  <!-- Main Styles -->
   <style>
-    /* … your :root + layout + glass card + toggles CSS … */
+    :root {
+      --bg-light: linear-gradient(135deg,#72EDF2 0%,#5151E5 100%);
+      --bg-dark:  linear-gradient(135deg,#232526 0%,#414345 100%);
+      --glass-bg:      rgba(255,255,255,0.15);
+      --glass-border:  rgba(255,255,255,0.3);
+      --color-light:   #fff;
+      --color-dark:    #1a1a1a;
+      --accent-color:  #36d1dc;
+      --slider-bg:     rgba(255,255,255,0.3);
+      --slider-thumb:  #fff;
+    }
+    * {box-sizing:border-box;margin:0;padding:0;}
+    body {
+      height:100vh;display:flex;justify-content:center;align-items:center;
+      background:var(--bg-light);transition:background .3s;
+      font-family:'Poppins',sans-serif;
+    }
+    body.dark-mode{background:var(--bg-dark);}
+    .mode-toggle {
+      position:fixed;top:20px;right:20px;display:flex;align-items:center;z-index:100;
+    }
+    .mode-toggle svg {
+      width:1.5rem;height:1.5rem;fill:var(--color-light);transition:opacity .3s;
+    }
+    #icon-moon{opacity:1;}
+    body.dark-mode #icon-moon{opacity:0;}
+    #icon-sun{opacity:0;}
+    body.dark-mode #icon-sun{opacity:1;}
+    .switch{position:relative;width:50px;height:24px;margin:0 .5rem;}
+    .switch input{opacity:0;width:0;height:0;}
+    .slider-toggle {
+      position:absolute;top:0;left:0;right:0;bottom:0;
+      background:rgba(255,255,255,0.5);border-radius:34px;cursor:pointer;
+      transition:background .4s;
+    }
+    .slider-toggle:before {
+      content:'';position:absolute;width:18px;height:18px;
+      left:3px;bottom:3px;background:var(--slider-thumb);
+      border-radius:50%;transition:transform .4s;
+    }
+    input:checked + .slider-toggle{background:var(--accent-color);}
+    input:checked + .slider-toggle:before{transform:translateX(26px);}
+
+    .nav-work {
+      position:fixed;top:20px;left:20px;z-index:100;
+      background:rgba(0,0,0,0.4);padding:.5rem 1rem;
+      border-radius:8px;
+      text-decoration:none;color:#fff;font-weight:600;
+      transition:background .2s;
+    }
+    .nav-work:hover{background:rgba(0,0,0,0.6);}
+
+    .container {
+      background:var(--glass-bg);border:1px solid var(--glass-border);
+      border-radius:20px;backdrop-filter:blur(10px);
+      padding:2rem;width:380px;color:var(--color-light);
+      box-shadow:0 8px 32px rgba(31,38,135,0.37);
+      text-align:center;position:relative;
+    }
+    h1{font-size:1.8rem;margin-bottom:.5rem;}
+    h2{font-size:1rem;font-weight:400;margin-bottom:1.5rem;opacity:.8;}
+    p{font-size:.875rem;line-height:1.4;margin-bottom:1rem;opacity:.85;}
+
+    .generator{
+      display:flex;align-items:center;gap:.5rem;margin-bottom:1rem;
+    }
+    #password {
+      flex:1;padding:.75rem 1rem;border:none;border-radius:12px;
+      background:rgba(255,255,255,0.25);color:var(--color-light);
+      font-size:1rem;letter-spacing:1px;
+    }
+    #password::placeholder{color:rgba(255,255,255,0.7);}
+    #copy {
+      padding:.5rem;background:rgba(255,255,255,0.2);
+      border:none;border-radius:8px;cursor:pointer;opacity:.8;
+      display:flex;align-items:center;justify-content:center;
+      transition:opacity .2s,background .2s;
+    }
+    #copy:hover{opacity:1;background:rgba(255,255,255,0.35);}
+    #copy svg{width:1.2rem;height:1.2rem;fill:var(--color-light);}
+
+    .btn{
+      margin-top:.5rem;padding:.75rem 1.5rem;
+      background:var(--accent-color);border:none;
+      border-radius:12px;color:var(--color-dark);
+      font-weight:600;cursor:pointer;transition:transform .2s;
+    }
+    .btn:hover{transform:scale(1.05);}
+
+    .length-selector{
+      display:flex;align-items:center;justify-content:space-between;
+      margin-top:1rem;margin-bottom:1.5rem;
+    }
+    #length {
+      -webkit-appearance:none;width:70%;height:6px;
+      background:var(--slider-bg);border-radius:3px;outline:none;
+      transition:background .3s;
+    }
+    #length::-webkit-slider-thumb{
+      -webkit-appearance:none;width:20px;height:20px;
+      background:var(--accent-color);cursor:pointer;
+      border-radius:50%;border:2px solid var(--color-light);
+      transition:background .3s,transform .2s;
+    }
+    #length::-webkit-slider-thumb:hover{transform:scale(1.1);}
+    #lengthValue{font-weight:600;}
+    footer{margin-top:auto;font-size:.8rem;opacity:.7;text-align:center;}
+    footer a{color:var(--color-light);text-decoration:none;}
   </style>
 
-  <!-- 1) gtag.js with default-deny -->
+  <!-- 1) gtag default-deny -->
   <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){ dataLayer.push(arguments); }
-    // Deny both by default:
-    gtag('consent','default', {
-      'ad_storage': 'denied',
-      'analytics_storage': 'denied'
-    });
+    window.dataLayer = window.dataLayer||[];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('consent','default',{ad_storage:'denied',analytics_storage:'denied'});
   </script>
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-JSQVTFQ0RF"></script>
-  <script>
-    gtag('js', new Date());
-    // We will send config/page_view once consent is granted
-  </script>
+  <script>gtag('js',new Date());</script>
 </head>
 <body>
-  <!-- 2) CookieConsent JS -->
+
+  <!-- 2) CookieConsent -->
   <script src="https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.js"></script>
   <script>
-    window.addEventListener('load', function(){
+    window.addEventListener('load',()=>{
       window.cookieconsent.initialise({
-        palette: {
-          popup:  { background: '#000' },
-          button: { background: '#36d1dc', text: '#fff' }
+        palette:{popup:{background:'#000'},button:{background:'#36d1dc',text:'#fff'}},
+        theme:'classic',type:'opt-in',
+        content:{
+          message:'We use cookies for analytics & ads.',
+          dismiss:'Allow cookies',
+          deny:'Decline',
+          link:'Privacy Policy',
+          href:'/privacy.html'
         },
-        theme: 'classic',
-        type: 'opt-in',
-        content: {
-          message:  'We use cookies for analytics & ads.',
-          dismiss:  'Allow cookies',
-          deny:     'Decline',
-          link:     'Privacy Policy',
-          href:     '/privacy.html'
-        },
-        onInitialise:    handleConsent,
-        onStatusChange:  handleConsent
+        onInitialise: handleConsent,
+        onStatusChange: handleConsent
       });
-
-      function handleConsent() {
-        if (this.hasConsented()) {
-          // Grant storage & load analytics + ads
-          gtag('consent','update',{
-            'ad_storage':        'granted',
-            'analytics_storage': 'granted'
-          });
-          // Now configure GA and send first page_view
+      function handleConsent(){
+        if(this.hasConsented()){
+          gtag('consent','update',{ad_storage:'granted',analytics_storage:'granted'});
           gtag('config','G-JSQVTFQ0RF');
-          // Enable AdSense
-          (adsbygoogle = window.adsbygoogle||[]).push({});
+          (adsbygoogle=window.adsbygoogle||[]).push({});
         } else {
-          gtag('consent','update',{
-            'ad_storage':        'denied',
-            'analytics_storage': 'denied'
-          });
+          gtag('consent','update',{ad_storage:'denied',analytics_storage:'denied'});
         }
       }
     });
   </script>
 
-  <!-- 3) AdSense verification snippet -->
+  <!-- 3) AdSense -->
   <script async
     src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7485778568309611"
     crossorigin="anonymous">
   </script>
 
-  <!-- Dark-mode toggle & nav omitted for brevity… -->
+  <!-- How it works link -->
+  <a href="/how-it-works.html" class="nav-work">How it works</a>
 
+  <!-- Dark/light toggle -->
+  <div class="mode-toggle">
+    <svg id="icon-moon" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 0110.21 3 7 7 0 1012 21a9 9 0 009-8.21z"/></svg>
+    <label class="switch">
+      <input type="checkbox" id="themeToggle"/>
+      <span class="slider-toggle"></span>
+    </label>
+    <svg id="icon-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/></svg>
+  </div>
+
+  <!-- Glass Card -->
   <div class="container">
-    <!-- Ad slot will render once allow cookies is clicked -->
+    <!-- Ad slot (renders after consent) -->
     <ins class="adsbygoogle"
-      style="display:block"
+      style="display:block;text-align:center"
       data-ad-client="ca-pub-7485778568309611"
       data-ad-slot="7059069610"
       data-ad-format="auto"
       data-full-width-responsive="true">
     </ins>
 
-    <!-- Your generator UI… -->
-    <input id="password" readonly placeholder="Your password"/>
-    <button id="generate">Generate</button>
-    <button id="copy">Copy</button>
-    <input type="range" id="length" min="8" max="32" value="16"/>
+    <h1>Secure Password Generator</h1>
+    <h2>Create complex passwords instantly</h2>
+    <p>Strong passwords combine length, complexity & randomness. Use ≥12 chars, mix cases, include numbers & symbols, avoid patterns.</p>
+    <p>Protect your accounts from brute-force, dictionary & credential-stuffing attacks by using unique, strong passwords.</p>
+
+    <div class="generator">
+      <input type="text" id="password" readonly placeholder="Your password"/>
+      <button id="copy" title="Copy to clipboard">
+        <svg viewBox="0 0 24 24"><path d="M19,21H9A2,2 0 0,1 7,19V7H9V19H19M16,3H5A2,2 0 0,0 3,5V17H5V5H16V3Z"/></svg>
+      </button>
+    </div>
+    <button class="btn" id="generate">Generate</button>
+    <div class="length-selector">
+      <label for="length">Length: <span id="lengthValue">16</span></label>
+      <input type="range" id="length" min="8" max="32" value="16"/>
+    </div>
+    <footer><a href="/privacy.html">Privacy Policy</a></footer>
   </div>
 
+  <!-- 4) Generator + event tracking -->
   <script>
-    // Track events only after gtag('config') has run:
-    const genBtn  = document.getElementById('generate');
-    const copyBtn = document.getElementById('copy');
-    const slider  = document.getElementById('length');
+    // Dark-mode toggle
+    document.getElementById('themeToggle').addEventListener('change',()=>{
+      document.body.classList.toggle('dark-mode');
+    });
 
-    genBtn.addEventListener('click', () => {
-      // … password gen logic …
+    const charset = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()-_=+[]{}|;:,.<>?',
+          pwField = document.getElementById('password'),
+          generateBtn = document.getElementById('generate'),
+          copyBtn = document.getElementById('copy'),
+          slider = document.getElementById('length'),
+          lengthValue = document.getElementById('lengthValue');
+
+    function gen(len){
+      return Array.from({length:len},()=>charset[Math.floor(Math.random()*charset.length)]).join('');
+    }
+
+    slider.oninput = ()=> lengthValue.textContent = slider.value;
+
+    generateBtn.onclick = ()=>{
+      const pwd = gen(+slider.value);
+      pwField.value = pwd;
       gtag('event','generate_password',{
         event_category:'engagement',
         event_label:`${slider.value} chars`
       });
-    });
-    copyBtn.addEventListener('click', () => {
-      // … copy logic …
-      gtag('event','copy_password',{ event_category:'engagement' });
-    });
+    };
+
+    copyBtn.onclick = ()=>{
+      if(!pwField.value) return;
+      navigator.clipboard.writeText(pwField.value);
+      gtag('event','copy_password',{event_category:'engagement'});
+      copyBtn.textContent = '✔';
+      setTimeout(()=>{
+        copyBtn.innerHTML = `<svg viewBox="0 0 24 24"><path d="M19,21H9A2,2 0 0,1 7,19V7H9V19H19M16,3H5A2,2 0 0,0 3,5V17H5V5H16V3Z"/></svg>`;
+      },1000);
+    };
   </script>
 </body>
 </html>
