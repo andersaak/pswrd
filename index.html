@@ -51,7 +51,6 @@
       background: var(--bg-light);
       transition: background .3s;
       font-family: 'Poppins', sans-serif;
-      gap: 1rem;
     }
     body.dark-mode { background: var(--bg-dark); }
 
@@ -95,11 +94,17 @@
     .ad-container {
       width: 100%;
       max-width: 380px;
-      display: none; /* Hidden until consent */
-      margin-bottom: 1rem;
+      position: absolute;
+      top: -120px; /* Position above the card when shown */
+      left: 50%;
+      transform: translateX(-50%);
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.3s ease, visibility 0.3s ease;
     }
     .ad-container.show-ad {
-      display: block;
+      opacity: 1;
+      visibility: visible;
     }
     .adsbygoogle {
       background: rgba(255,255,255,0.1);
@@ -242,7 +247,7 @@
     <svg id="icon-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/></svg>
   </div>
 
-  <!-- Ad slot (outside the main card) -->
+  <!-- Ad slot (positioned absolutely above the card) -->
   <div class="ad-container">
     <ins class="adsbygoogle"
       style="display:block;text-align:center"
