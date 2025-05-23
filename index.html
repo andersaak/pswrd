@@ -8,9 +8,6 @@
   <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
 
-  <!-- CookieConsent CSS -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.css" />
-
   <!-- Main Styles -->
   <style>
     :root {
@@ -36,12 +33,10 @@
     }
     body.dark-mode { background: var(--bg-dark); }
     .mode-toggle {
-      position: fixed; top: 20px; right: 20px;
-      display: flex; align-items: center; z-index: 100;
+      position: fixed; top: 20px; right: 20px; display: flex; align-items: center; z-index: 100;
     }
     .mode-toggle svg {
-      width: 1.5rem; height: 1.5rem;
-      fill: var(--color-light); transition: opacity 0.3s;
+      width: 1.5rem; height: 1.5rem; fill: var(--color-light); transition: opacity 0.3s;
     }
     #icon-moon { opacity: 1; }
     body.dark-mode #icon-moon { opacity: 0; }
@@ -51,32 +46,24 @@
     .switch input { opacity: 0; width: 0; height: 0; }
     .slider-toggle {
       position: absolute; top: 0; left: 0; right: 0; bottom: 0;
-      background: rgba(255,255,255,0.5); border-radius: 34px;
-      cursor: pointer; transition: background 0.4s;
+      background: rgba(255,255,255,0.5); border-radius: 34px; cursor: pointer; transition: background 0.4s;
     }
     .slider-toggle:before {
-      content: '';
-      position: absolute; width: 18px; height: 18px;
-      left: 3px; bottom: 3px;
-      background: var(--slider-thumb); border-radius: 50%;
-      transition: transform 0.4s;
+      content: ''; position: absolute; width: 18px; height: 18px; left: 3px; bottom: 3px;
+      background: var(--slider-thumb); border-radius: 50%; transition: transform 0.4s;
     }
     input:checked + .slider-toggle { background: var(--accent-color); }
     input:checked + .slider-toggle:before { transform: translateX(26px); }
 
     .container {
-      background: var(--glass-bg); border: 1px solid var(--glass-border);
-      border-radius: 20px; backdrop-filter: blur(10px);
-      padding: 2rem; width: 380px; color: var(--color-light);
-      box-shadow: 0 8px 32px rgba(31, 38, 135, 0.37);
-      display: flex; flex-direction: column;
+      background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: 20px;
+      backdrop-filter: blur(10px); padding: 2rem; width: 380px; color: var(--color-light);
+      box-shadow: 0 8px 32px rgba(31, 38, 135, 0.37); display: flex; flex-direction: column;
     }
     h1 { font-size: 1.8rem; font-weight: 600; margin-bottom: 0.5rem; }
     h2 { font-size: 1rem; font-weight: 400; margin-bottom: 1.5rem; opacity: 0.8; }
     p { font-size: 0.875rem; line-height: 1.4; margin-bottom: 1rem; opacity: 0.85; }
-    .generator {
-      display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1rem;
-    }
+    .generator { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1rem; }
     #password {
       flex: 1; padding: 0.75rem 1rem; border: none; border-radius: 12px;
       background: rgba(255,255,255,0.25); color: var(--color-light);
@@ -84,130 +71,97 @@
     }
     #password::placeholder { color: rgba(255,255,255,0.7); }
     #copy {
-      padding: 0.5rem; background: rgba(255,255,255,0.2);
-      border: none; border-radius: 8px; cursor: pointer; opacity: 0.8;
-      display: flex; align-items: center; justify-content: center;
+      padding: 0.5rem; background: rgba(255,255,255,0.2); border: none; border-radius: 8px;
+      cursor: pointer; opacity: 0.8; display: flex; align-items: center; justify-content: center;
       transition: opacity 0.2s, background 0.2s;
     }
     #copy:hover { opacity: 1; background: rgba(255,255,255,0.35); }
     #copy svg { width: 1.2rem; height: 1.2rem; fill: var(--color-light); }
-    .btn {
-      margin-top: 0.5rem; padding: 0.75rem 1.5rem;
-      background: var(--accent-color); color: var(--color-dark);
-      border: none; border-radius: 12px; font-weight: 600;
+    .btn { margin-top: 0.5rem; padding: 0.75rem 1.5rem; background: var(--accent-color);
+      color: var(--color-dark); border: none; border-radius: 12px; font-weight: 600;
       cursor: pointer; transition: transform 0.2s;
     }
     .btn:hover { transform: scale(1.05); }
-    .length-selector {
-      display: flex; align-items: center; justify-content: space-between;
+    .length-selector { display: flex; align-items: center; justify-content: space-between;
       margin: 1rem 0 1.5rem;
     }
-    #length {
-      -webkit-appearance: none; width: 70%; height: 6px;
-      background: var(--slider-bg); border-radius: 3px;
-      outline: none; transition: background 0.3s;
+    #length { -webkit-appearance: none; width: 70%; height: 6px;
+      background: var(--slider-bg); border-radius: 3px; outline: none; transition: background 0.3s;
     }
     #length::-webkit-slider-thumb {
-      -webkit-appearance: none; width: 20px; height: 20px;
-      background: var(--accent-color); cursor: pointer;
-      border-radius: 50%; border: 2px solid var(--color-light);
+      -webkit-appearance: none; width: 20px; height: 20px; background: var(--accent-color);
+      cursor: pointer; border-radius: 50%; border: 2px solid var(--color-light);
       transition: background 0.3s, transform 0.2s;
     }
     #length::-webkit-slider-thumb:hover { transform: scale(1.1); }
     #lengthValue { font-weight: 600; }
-    footer {
-      margin-top: auto; font-size: 0.8rem; opacity: 0.7; text-align: center;
-    }
+    footer { margin-top: auto; font-size: 0.8rem; opacity: 0.7; text-align: center; }
     footer a { color: var(--color-light); text-decoration: none; }
   </style>
 
-  <!-- Google Analytics -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-JSQVTFQ0RF"></script>
+  <!-- 1) Consent Mode default-deny -->
   <script>
     window.dataLayer = window.dataLayer || [];
     function gtag(){ dataLayer.push(arguments); }
-    gtag('js', new Date());
-    gtag('config', 'G-JSQVTFQ0RF');
+    gtag('consent','default',{ 'ad_storage':'denied','analytics_storage':'denied' });
   </script>
 
-  <!-- CookieConsent JS -->
-  <script src="https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.js"></script>
+  <!-- 2) Load gtag.js -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-JSQVTFQ0RF"></script>
+  <script> gtag('js', new Date()); </script>
 
-  <!-- AdSense site verification -->
-  <script async
-          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7485778568309611"
-          crossorigin="anonymous"></script>
-</head>
-<body>
+  <!-- 3) CookieConsent v3 opt-in -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.css"/>
+  <script src="https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.js"></script>
   <script>
-    window.addEventListener("load", function(){
+    window.addEventListener('load', function(){
       window.cookieconsent.initialise({
-        palette: { popup:{background:"#000"}, button:{background:"#36d1dc",text:"#fff"} },
-        theme: "classic",
-        content:{ message:"We use cookies for analytics & ads.", dismiss:"Got it", link:"Privacy Policy", href:"/privacy.html" }
+        palette:{ popup:{background:'#000'}, button:{background:'#36d1dc',text:'#fff'} },
+        theme:'classic', type:'opt-in',
+        content:{ message:'Vi bruker cookies for analyse & annonser.', dismiss:'Samtykker', deny:'Samtykker ikke', link:'Administrer alternativer', href:'/privacy.html' },
+        onInitialise:function(){ if(this.hasConsented()){ gtag('consent','update',{ 'ad_storage':'granted','analytics_storage':'granted' }); gtag('event','page_view');}},
+        onStatusChange:function(){ if(this.hasConsented()){ gtag('consent','update',{ 'ad_storage':'granted','analytics_storage':'granted' }); gtag('event','page_view'); } else { gtag('consent','update',{ 'ad_storage':'denied','analytics_storage':'denied' }); }}
       });
     });
   </script>
 
+  <!-- 4) AdSense verification -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7485778568309611" crossorigin="anonymous"></script>
+</head>
+<body>
   <div class="mode-toggle">
     <svg id="icon-moon" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 0110.21 3 7 7 0 1012 21a9 9 0 009-8.21z"/></svg>
-    <label class="switch"><input type="checkbox" id="themeToggle"><span class="slider-toggle"></span></label>
+    <label class="switch"><input type="checkbox" id="themeToggle"/><span class="slider-toggle"></span></label>
     <svg id="icon-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/></svg>
   </div>
 
   <div class="container">
-    <script data-ad-client="ca-pub-XXXXXXXXXXXXXXXX" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <!-- AdSense banner -->
+    <ins class="adsbygoogle" style="display:block; text-align:center;" data-ad-client="ca-pub-7485778568309611" data-ad-slot="7059069610" data-ad-format="auto" data-full-width-responsive="true"></ins>
+    <script>(adsbygoogle=window.adsbygoogle||[]).push({});</script>
+
     <h1>Secure Password Generator</h1>
     <h2>Create complex passwords instantly</h2>
     <p>Strong passwords combine length, complexity, and randomness to fend off attackers. Use at least 12 characters, mix cases, include numbers & symbols, and avoid predictable patterns.</p>
     <p>Protect your accounts and data from brute-force, dictionary attacks, and credential stuffing by using unique, strong passwords for every service.</p>
     <div class="generator">
-      <input type="text" id="password" readonly placeholder="Your password">
+      <input type="text" id="password" readonly placeholder="Your password"/>
       <button id="copy" title="Copy to clipboard"><svg viewBox="0 0 24 24"><path d="M19,21H9A2,2 0 0,1 7,19V7H9V19H19M16,3H5A2,2 0 0,0 3,5V17H5V5H16V3Z"/></svg></button>
     </div>
     <button class="btn" id="generate">Generate</button>
-    <div class="length-selector">
-      <label for="length">Length: <span id="lengthValue">16</span></label>
-      <input type="range" id="length" min="8" max="32" value="16">
-    </div>
+    <div class="length-selector"><label for="length">Length: <span id="lengthValue">16</span></label><input type="range" id="length" min="8" max="32" value="16"/></div>
     <footer><a href="/privacy.html">Privacy Policy</a></footer>
   </div>
 
   <script>
-    const generateBtn    = document.getElementById('generate');
-    const copyBtn        = document.getElementById('copy');
-    const passwordField  = document.getElementById('password');
-    const lengthSlider   = document.getElementById('length');
-    const lengthValue    = document.getElementById('lengthValue');
-    const charset        = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()-_=+[]{}|;:,.<>?';
-
-    function gen(len) {
-      return Array.from({length: len}, () => charset[Math.floor(Math.random()*charset.length)]).join('');
-    }
-
-    generateBtn.addEventListener('click', () => {
-      const pwd = gen(+lengthSlider.value);
-      passwordField.value = pwd;
-      console.log('▶️ generate_password listener fired');
-      gtag('event', 'generate_password', { event_category: 'engagement', event_label: `${lengthSlider.value} chars` });
-    });
-
-    lengthSlider.addEventListener('input', () => {
-      lengthValue.textContent = lengthSlider.value;
-    });
-
-    copyBtn.addEventListener('click', () => {
-      if (!passwordField.value) return;
-      navigator.clipboard.writeText(passwordField.value);
-      console.log('📋 copy_password listener fired');
-      gtag('event', 'copy_password', { event_category: 'engagement' });
-      copyBtn.textContent = '✔';
-      setTimeout(() => { copyBtn.innerHTML = '<svg viewBox="0 0 24 24"><path d="M19,21H9A2,2 0 0,1 7,19V7H9V19H19M16,3H5A2,2 0 0,0 3,5V17H5V5H16V3Z"/></svg>'; }, 1000);
-    });
-
-    document.getElementById('themeToggle').addEventListener('change', () => {
-      document.body.classList.toggle('dark-mode');
-    });
+    // Dark mode toggle
+    document.getElementById('themeToggle').addEventListener('change', ()=>document.body.classList.toggle('dark-mode'));
+    // Generator + GA events
+    const charset='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()-_=+[]{}|;:,.<>?', pw=document.getElementById('password'), genBtn=document.getElementById('generate'), sl=document.getElementById('length'), val=document.getElementById('lengthValue'), copyBtn=document.getElementById('copy');
+    function gen(n){return Array.from({length:n},()=>charset[Math.floor(Math.random()*charset.length)]).join('');}
+    genBtn.onclick=()=>{const p=gen(+sl.value);pw.value=p;console.log('▶️ generate_password');gtag('event','generate_password',{event_category:'engagement',event_label:`${sl.value} chars`});};
+    sl.oninput=()=>val.textContent=sl.value;
+    copyBtn.onclick=()=>{if(!pw.value)return;navigator.clipboard.writeText(pw.value);console.log('📋 copy_password');gtag('event','copy_password',{event_category:'engagement'});copyBtn.textContent='✔';setTimeout(()=>copyBtn.innerHTML='<svg viewBox="0 0 24 24"><path d="M19,21H9A2,2 0 0,1 7,19V7H9V19H19M16,3H5A2,2 0 0,0 3,5V17H5V5H16V3Z"/></svg>',1000);};
   </script>
 </body>
 </html>
