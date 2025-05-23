@@ -169,8 +169,28 @@
     #length::-webkit-slider-thumb:hover { transform: scale(1.1); }
     #lengthValue { font-weight: 600; }
   </style>
+  <link rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.css"/>
+<script src="https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.js"></script>
 </head>
 <body>
+    <script>
+        window.addEventListener("load", function(){
+          window.cookieconsent.initialise({
+            palette: {
+              popup: { background:"#000" },
+              button:{ background:"#36d1dc", text:"#fff" }
+            },
+            theme:"classic",
+            content:{
+              message:"We use cookies for analytics & ads.",
+              dismiss:"Got it",
+              link:"Privacy Policy",
+              href:"/privacy.html"
+            }
+          })
+        });
+        </script>        
   <div class="mode-toggle">
     <svg id="icon-moon" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 0110.21 3 7 7 0 1012 21a9 9 0 009-8.21z"/></svg>
     <label class="switch">
