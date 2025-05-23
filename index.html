@@ -26,7 +26,8 @@
     }
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
-      height: 100vh;
+      position: relative;          /* ← added */
+      min-height: 100vh;           /* ← use min-height so it can grow */
       display: flex;
       justify-content: center;
       align-items: center;
@@ -74,20 +75,23 @@
     .nav-work:hover { background: rgba(0,0,0,0.6); }
 
     .container {
+      position: absolute;          /* ← added */
+      top: 50%;                    /* ← added */
+      left: 50%;                   /* ← added */
+      transform: translate(-50%, -50%); /* ← added */
       background: var(--glass-bg);
       border: 1px solid var(--glass-border);
       border-radius: 20px;
       backdrop-filter: blur(10px);
-      padding: 1rem 2rem 2rem;     /* <-- reduced top padding */
+      padding: 1rem 2rem 2rem;
       width: 380px;
       color: var(--color-light);
       box-shadow: 0 8px 32px rgba(31,38,135,0.37);
       text-align: center;
-      position: relative;
     }
     h1 {
       font-size: 1.8rem;
-      margin: 0 0 0.5rem;           /* <-- no extra top space */
+      margin: 0 0 0.5rem;
     }
     h2 {
       font-size: 1rem; font-weight: 400;
@@ -189,7 +193,8 @@
   </script>
 
   <!-- 3) AdSense -->
-  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7485778568309611" crossorigin="anonymous"></script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7485778568309611"
+          crossorigin="anonymous"></script>
 
   <!-- How it works link -->
   <a href="/how-it-works.html" class="nav-work">How it works</a>
