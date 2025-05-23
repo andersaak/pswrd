@@ -95,14 +95,9 @@
       width: 100%;
       max-width: 380px;
       position: absolute;
-      top: -120px; /* Position above the card when shown */
+      top: -120px; /* Position above the card */
       left: 50%;
       transform: translateX(-50%);
-      opacity: 0;
-      visibility: hidden;
-      transition: opacity 0.3s ease, visibility 0.3s ease;
-    }
-    .ad-container.show-ad {
       opacity: 1;
       visibility: visible;
     }
@@ -208,8 +203,8 @@
         palette:{ popup:{ background:'#000' }, button:{ background:'#36d1dc', text:'#fff' } },
         theme:'classic', type:'opt-in',
         content:{
-          message:'We use cookies for analytics & ads.',
-          dismiss:'Allow cookies', deny:'Decline',
+          message:'We use cookies to personalize ads & analytics.',
+          dismiss:'Accept', deny:'Decline',
           link:'Privacy Policy', href:'/privacy.html'
         },
         onInitialise: handleConsent,
@@ -217,16 +212,15 @@
       });
       function handleConsent(){
         if(this.hasConsented()){
+          // User accepted - enable personalized ads & analytics
           gtag('consent','update',{ ad_storage:'granted', analytics_storage:'granted' });
           gtag('config','G-JSQVTFQ0RF');
-          // Show ad container and initialize ads
-          document.querySelector('.ad-container').classList.add('show-ad');
-          (adsbygoogle=window.adsbygoogle||[]).push({});
         } else {
+          // User denied - keep ads but no personalization/tracking
           gtag('consent','update',{ ad_storage:'denied', analytics_storage:'denied' });
-          // Hide ad container
-          document.querySelector('.ad-container').classList.remove('show-ad');
         }
+        // Always initialize ads regardless of consent
+        (adsbygoogle=window.adsbygoogle||[]).push({});
       }
     });
   </script>
