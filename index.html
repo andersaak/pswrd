@@ -102,6 +102,23 @@
     function gtag(){ dataLayer.push(arguments); }
     gtag('js', new Date());
     gtag('config', 'G-JSQVTFQ0RF');
+    // After your gtag('config',…) has loaded:
+
+// 1) Track each time someone clicks “Generate”
+generateBtn.addEventListener('click', () => {
+  gtag('event', 'generate_password', {
+    event_category: 'engagement',
+    event_label: `${lengthSlider.value} chars`,
+  });
+});
+
+// 2) Track each time someone copies
+copyBtn.addEventListener('click', () => {
+  if (!passwordField.value) return;
+  gtag('event', 'copy_password', {
+    event_category: 'engagement'
+  });
+});
   </script>
 
   <!-- CookieConsent JS -->
