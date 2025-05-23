@@ -77,12 +77,8 @@
       border-radius: 50%;
       transition: transform 0.4s;
     }
-    input:checked + .slider-toggle {
-      background: var(--accent-color);
-    }
-    input:checked + .slider-toggle:before {
-      transform: translateX(26px);
-    }
+    input:checked + .slider-toggle { background: var(--accent-color); }
+    input:checked + .slider-toggle:before { transform: translateX(26px); }
     .container {
       background: var(--glass-bg);
       border: 1px solid var(--glass-border);
@@ -94,6 +90,8 @@
       color: var(--color-light);
       box-shadow: 0 8px 32px rgba(31, 38, 135, 0.37);
       position: relative;
+      display: flex;
+      flex-direction: column;
     }
     h1 { font-size: 1.8rem; font-weight: 600; margin-bottom: 0.5rem; }
     h2 { font-size: 1rem; font-weight: 400; margin-bottom: 1.5rem; opacity: 0.8; }
@@ -146,6 +144,7 @@
       align-items: center;
       justify-content: space-between;
       margin-top: 1rem;
+      margin-bottom: 1.5rem;
     }
     #length {
       -webkit-appearance: none;
@@ -168,29 +167,16 @@
     }
     #length::-webkit-slider-thumb:hover { transform: scale(1.1); }
     #lengthValue { font-weight: 600; }
+    footer {
+      margin-top: auto;
+      font-size: 0.8rem;
+      opacity: 0.7;
+      text-align: center;
+    }
+    footer a { color: var(--color-light); text-decoration: none; }
   </style>
-  <link rel="stylesheet"
-  href="https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.css"/>
-<script src="https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.js"></script>
 </head>
 <body>
-    <script>
-        window.addEventListener("load", function(){
-          window.cookieconsent.initialise({
-            palette: {
-              popup: { background:"#000" },
-              button:{ background:"#36d1dc", text:"#fff" }
-            },
-            theme:"classic",
-            content:{
-              message:"We use cookies for analytics & ads.",
-              dismiss:"Got it",
-              link:"Privacy Policy",
-              href:"/privacy.html"
-            }
-          })
-        });
-        </script>        
   <div class="mode-toggle">
     <svg id="icon-moon" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 0110.21 3 7 7 0 1012 21a9 9 0 009-8.21z"/></svg>
     <label class="switch">
@@ -200,6 +186,16 @@
     <svg id="icon-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/><g stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></g></svg>
   </div>
   <div class="container">
+    <script>
+      window.addEventListener("load", function(){
+        window.cookieconsent.initialise({
+          palette: { popup: { background:"#000" }, button:{ background:"#36d1dc", text:"#fff" } },
+          theme:"classic",
+          content:{ message:"We use cookies for analytics & ads.", dismiss:"Got it", link:"Privacy Policy", href:"/privacy.html" }
+        });
+      });
+    </script>
+    <script data-ad-client="ca-pub-XXXXXXXXXXXXXXXX" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
     <h1>Secure Password Generator</h1>
     <h2>Create complex passwords instantly</h2>
     <p>Strong passwords combine length, complexity, and randomness to fend off attackers. Use at least 12 characters, mix cases, include numbers & symbols, and avoid predictable patterns.</p>
@@ -213,6 +209,10 @@
       <label for="length">Length: <span id="lengthValue">16</span></label>
       <input type="range" id="length" min="8" max="32" value="16" />
     </div>
+    <!-- Footer link moved inside container -->
+    <footer>
+      <a href="/privacy.html">Privacy Policy</a>
+    </footer>
   </div>
   <script>
     const body = document.body;
@@ -234,8 +234,5 @@
       setTimeout(() => copyBtn.innerHTML = '<svg viewBox="0 0 24 24"><path d="M19,21H9A2,2 0 0,1 7,19V7H9V19H19M16,3H5A2,2 0 0,0 3,5V17H5V5H16V3Z"/></svg>' , 1000);
     };
   </script>
-  <footer style="margin-top:2rem; text-align:center; font-size:0.8rem; opacity:0.7;">
-    <a href="/privacy.html">Privacy Policy</a>
-  </footer>  
 </body>
 </html>
