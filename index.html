@@ -106,6 +106,7 @@
       border-radius: 12px;
       min-height: 90px;
       display: block;
+      border: 2px dashed rgba(255,255,255,0.3); /* Temporary - shows ad slot */
     }
 
     .container {
@@ -219,16 +220,23 @@
           // User denied - keep ads but no personalization/tracking
           gtag('consent','update',{ ad_storage:'denied', analytics_storage:'denied' });
         }
-        // Always initialize ads regardless of consent
-        (adsbygoogle=window.adsbygoogle||[]).push({});
+        // Ads are already initialized on page load
       }
     });
   </script>
 
-  <!-- 3) AdSense -->
+  <!-- 3) AdSense - Load immediately -->
   <script async
     src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7485778568309611"
     crossorigin="anonymous">
+  </script>
+  
+  <!-- Initialize ads immediately on page load -->
+  <script>
+    window.addEventListener('load', () => {
+      // Initialize ads right away, regardless of consent
+      (adsbygoogle = window.adsbygoogle || []).push({});
+    });
   </script>
 
   <!-- How it works link -->
