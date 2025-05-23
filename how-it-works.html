@@ -6,6 +6,9 @@
   <title>How It Works — Secure Password Generator</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet"/>
 
+  <!-- CookieConsent CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.css"/>
+
   <style>
     :root {
       --bg-light: linear-gradient(135deg, #72EDF2 0%, #5151E5 100%);
@@ -47,9 +50,9 @@
       transition:background .4s;
     }
     .slider-toggle:before {
-      content:'';
-      position:absolute; width:18px; height:18px; left:3px; bottom:3px;
-      background:var(--color-light); border-radius:50%; transition:transform .4s;
+      content:''; position:absolute; width:18px; height:18px;
+      left:3px; bottom:3px; background:var(--color-light);
+      border-radius:50%; transition:transform .4s;
     }
     input:checked + .slider-toggle { background:var(--accent-color); }
     input:checked + .slider-toggle:before { transform:translateX(26px); }
@@ -63,24 +66,37 @@
       width: 380px;
       color: var(--color-light);
       box-shadow: 0 8px 32px rgba(31,38,135,0.37);
-      position: relative;
       text-align: left;
     }
     .back-btn {
-      display:inline-block;
-      margin-bottom:1rem;
+      display:inline-block; margin-bottom:1rem;
       padding:.5rem 1rem;
       background: var(--accent-color);
       color: var(--color-dark);
-      text-decoration:none;
-      border-radius:12px;
-      font-weight:600;
+      text-decoration:none; border-radius:12px; font-weight:600;
     }
     h1 { font-size:1.8rem; margin-bottom:.5rem; }
     p  { margin-bottom:1rem; font-size:.9rem; line-height:1.4; opacity:.9; }
   </style>
 </head>
 <body>
+  <!-- CookieConsent JS -->
+  <script src="https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.js"></script>
+  <script>
+    window.addEventListener('load', function(){
+      window.cookieconsent.initialise({
+        palette: { popup:{background:'#000'}, button:{background:'#36d1dc',text:'#fff'} },
+        theme: 'classic',
+        content:{
+          message: 'We use cookies for analytics & ads.',
+          dismiss: 'Allow cookies',
+          link: 'Privacy Policy',
+          href: '/privacy.html'
+        }
+      });
+    });
+  </script>
+
   <!-- dark mode toggle -->
   <div class="mode-toggle">
     <svg id="icon-moon" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 0110.21 3 7 7 0 1012 21a9 9 0 009-8.21z"/></svg>
