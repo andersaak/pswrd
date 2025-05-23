@@ -1,129 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Secure Password Generator</title>
-
-  <!-- Google Fonts -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>How It Works — Secure Password Generator</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
-
-  <!-- Main Styles -->
   <style>
-    :root {
-      --bg-light: linear-gradient(135deg, #72EDF2 0%, #5151E5 100%);
-      --bg-dark: linear-gradient(135deg, #232526 0%, #414345 100%);
-      --glass-bg: rgba(255, 255, 255, 0.15);
-      --glass-border: rgba(255, 255, 255, 0.3);
-      --color-light: #ffffff;
-      --color-dark: #1a1a1a;
-      --accent-color: #36d1dc;
-      --slider-bg: rgba(255,255,255,0.3);
-      --slider-thumb: #ffffff;
+    body { font-family:'Poppins',sans-serif; margin:2rem; line-height:1.6; }
+    h1 { font-size:1.8rem; margin-bottom:1rem; }
+    p  { margin-bottom:1rem; }
+    .back-btn {
+      display: inline-block; margin-bottom:2rem; padding:0.5rem 1rem;
+      background:#36d1dc; color:#1a1a1a; text-decoration:none; font-weight:600;
+      border-radius:6px;
     }
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body {
-      height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      background: var(--bg-light);
-      transition: background 0.3s;
-      font-family: 'Poppins', sans-serif;
-    }
-    body.dark-mode { background: var(--bg-dark); }
-    nav {
-      position: fixed;
-      top: 20px;
-      left: 20px;
-      z-index: 100;
-    }
-    nav a {
-      color: var(--color-light);
-      font-weight: 600;
-      text-decoration: none;
-      background: rgba(0,0,0,0.3);
-      padding: 0.25rem 0.5rem;
-      border-radius: 6px;
-    }
-    .mode-toggle {
-      position: fixed; top: 20px; right: 20px; display: flex; align-items: center; z-index: 100;
-    }
-    .mode-toggle svg {
-      width: 1.5rem; height: 1.5rem; fill: var(--color-light); transition: opacity 0.3s;
-    }
-    #icon-moon { opacity: 1; }
-    body.dark-mode #icon-moon { opacity: 0; }
-    #icon-sun { opacity: 0; }
-    body.dark-mode #icon-sun { opacity: 1; }
-    .switch { position: relative; width: 50px; height: 24px; margin: 0 0.5rem; }
-    .switch input { opacity: 0; width: 0; height: 0; }
-    .slider-toggle {
-      position: absolute; top: 0; left: 0; right: 0; bottom: 0;
-      background: rgba(255,255,255,0.5); border-radius: 34px; cursor: pointer; transition: background 0.4s;
-    }
-    .slider-toggle:before {
-      content: ''; position: absolute; width: 18px; height: 18px; left: 3px; bottom: 3px;
-      background: var(--slider-thumb); border-radius: 50%; transition: transform 0.4s;
-    }
-    input:checked + .slider-toggle { background: var(--accent-color); }
-    input:checked + .slider-toggle:before { transform: translateX(26px); }
-    .container {
-      background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: 20px;
-      backdrop-filter: blur(10px); padding: 2rem; width: 380px; color: var(--color-light);
-      box-shadow: 0 8px 32px rgba(31, 38, 135, 0.37); display: flex; flex-direction: column;
-    }
-    h1 { font-size: 1.8rem; font-weight: 600; margin-bottom: 0.5rem; }
-    h2 { font-size: 1rem; font-weight: 400; margin-bottom: 1.5rem; opacity: 0.8; }
-    p { font-size: 0.875rem; line-height: 1.4; margin-bottom: 1rem; opacity: 0.85; }
-    .generator { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1rem; }
-    #password {
-      flex: 1; padding: 0.75rem 1rem; border: none; border-radius: 12px; background: rgba(255,255,255,0.25);
-      color: var(--color-light); font-size: 1rem; letter-spacing: 1px;
-    }
-    #password::placeholder { color: rgba(255,255,255,0.7); }
-    #copy {
-      padding: 0.5rem; background: rgba(255,255,255,0.2); border: none; border-radius: 8px;
-      cursor: pointer; opacity: 0.8; display: flex; align-items: center; justify-content: center;
-      transition: opacity 0.2s, background 0.2s;
-    }
-    #copy:hover { opacity: 1; background: rgba(255,255,255,0.35); }
-    #copy svg { width: 1.2rem; height: 1.2rem; fill: var(--color-light); }
-    .btn { margin-top: 0.5rem; padding: 0.75rem 1.5rem; background: var(--accent-color);
-      border: none; border-radius: 12px; color: var(--color-dark); font-weight: 600;
-      cursor: pointer; transition: transform 0.2s;
-    }
-    .btn:hover { transform: scale(1.05); }
-    .length-selector { display: flex; align-items: center; justify-content: space-between;
-      margin: 1rem 0 1.5rem;
-    }
-    #length { -webkit-appearance: none; width: 70%; height: 6px; background: var(--slider-bg);
-      border-radius: 3px; outline: none; transition: background 0.3s;
-    }
-    #length::-webkit-slider-thumb {
-      -webkit-appearance: none; width: 20px; height: 20px; background: var(--accent-color);
-      cursor: pointer; border-radius: 50%; border: 2px solid var(--color-light);
-      transition: background 0.3s, transform 0.2s;
-    }
-    #length::-webkit-slider-thumb:hover { transform: scale(1.1); }
-    #lengthValue { font-weight: 600; }
-    footer { margin-top: auto; font-size: 0.8rem; opacity: 0.7; text-align: center; }
-    footer a { color: var(--color-light); text-decoration: none; }
   </style>
-
-  <!-- scripts omitted -->
 </head>
 <body>
-  <nav>
-    <a href="/how-it-works.html">How it works</a>
-  </nav>
-  <div class="mode-toggle">
-    <svg id="icon-moon" viewBox="0 0 24 24">...</svg>
-    <label class="switch"><input type="checkbox" id="themeToggle"/><span class="slider-toggle"></span></label>
-    <svg id="icon-sun" viewBox="0 0 24 24">...</svg>
-  </div>
-  <div class="container">
-    <!-- rest of content -->
-  </div>
+  <a class="back-btn" href="/">← Back to Generator</a>
+  <h1>How It Works</h1>
+  <p>This tool generates a random, secure password by selecting characters from uppercase letters, lowercase letters, numbers, and symbols. Adjust the length (8–32 chars) with the slider, then click “Generate.”</p>
+  <p>After generation, click “Copy” to securely copy the password to your clipboard.</p>
+  <p>Under the hood, we use JavaScript’s <code>Math.random()</code> to pick each character, ensuring high randomness and security.</p>
 </body>
 </html>
