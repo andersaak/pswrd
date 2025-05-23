@@ -45,11 +45,13 @@
       min-height: 100vh;
       min-height: 100dvh;
       display: flex;
+      flex-direction: column;
       justify-content: center;
       align-items: center;
       background: var(--bg-light);
       transition: background .3s;
       font-family: 'Poppins', sans-serif;
+      gap: 1rem;
     }
     body.dark-mode { background: var(--bg-dark); }
 
@@ -89,6 +91,23 @@
     }
     .nav-work:hover { background: rgba(0,0,0,0.6); }
 
+    /* Ad container styling */
+    .ad-container {
+      width: 100%;
+      max-width: 380px;
+      display: none; /* Hidden until consent */
+      margin-bottom: 1rem;
+    }
+    .ad-container.show-ad {
+      display: block;
+    }
+    .adsbygoogle {
+      background: rgba(255,255,255,0.1);
+      border-radius: 12px;
+      min-height: 90px;
+      display: block;
+    }
+
     .container {
       background: var(--glass-bg);
       border: 1px solid var(--glass-border);
@@ -100,7 +119,6 @@
       box-shadow: 0 8px 32px rgba(31,38,135,0.37);
       text-align: center;
       position: relative;
-      /* Keep the card always vertically centered, never moved by banner */
       z-index: 1;
     }
     h1 {
@@ -196,9 +214,13 @@
         if(this.hasConsented()){
           gtag('consent','update',{ ad_storage:'granted', analytics_storage:'granted' });
           gtag('config','G-JSQVTFQ0RF');
+          // Show ad container and initialize ads
+          document.querySelector('.ad-container').classList.add('show-ad');
           (adsbygoogle=window.adsbygoogle||[]).push({});
         } else {
           gtag('consent','update',{ ad_storage:'denied', analytics_storage:'denied' });
+          // Hide ad container
+          document.querySelector('.ad-container').classList.remove('show-ad');
         }
       }
     });
@@ -220,9 +242,8 @@
     <svg id="icon-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/></svg>
   </div>
 
-  <!-- Glass Card -->
-  <div class="container">
-    <!-- Ad slot (renders after consent) -->
+  <!-- Ad slot (outside the main card) -->
+  <div class="ad-container">
     <ins class="adsbygoogle"
       style="display:block;text-align:center"
       data-ad-client="ca-pub-7485778568309611"
@@ -230,7 +251,10 @@
       data-ad-format="auto"
       data-full-width-responsive="true">
     </ins>
+  </div>
 
+  <!-- Glass Card -->
+  <div class="container">
     <h1>Secure Password Generator</h1>
     <h2>Create complex passwords instantly</h2>
     <p>Strong passwords combine length, complexity & randomness. Use ≥12 chars, mix cases, include numbers & symbols, avoid patterns.</p>
