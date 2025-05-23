@@ -13,6 +13,14 @@
 
   <!-- Main Styles -->
   <style>
+    /* make the cookie banner an overlay so it doesn’t push your card */
+    .cc-window {
+      position: fixed !important;
+      bottom: 0 !important;
+      width: 100% !important;
+      z-index: 200 !important;
+    }
+
     :root {
       --bg-light: linear-gradient(135deg,#72EDF2 0%,#5151E5 100%);
       --bg-dark:  linear-gradient(135deg,#232526 0%,#414345 100%);
@@ -26,8 +34,8 @@
     }
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
-      position: relative;          /* ← added */
-      min-height: 100vh;           /* ← use min-height so it can grow */
+      position: relative;
+      min-height: 100vh;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -75,10 +83,10 @@
     .nav-work:hover { background: rgba(0,0,0,0.6); }
 
     .container {
-      position: absolute;          /* ← added */
-      top: 50%;                    /* ← added */
-      left: 50%;                   /* ← added */
-      transform: translate(-50%, -50%); /* ← added */
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
       background: var(--glass-bg);
       border: 1px solid var(--glass-border);
       border-radius: 20px;
@@ -168,7 +176,7 @@
   <!-- 2) CookieConsent -->
   <script src="https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.js"></script>
   <script>
-    window.addEventListener('load',()=>{
+    window.addEventListener('load', ()=>{
       window.cookieconsent.initialise({
         palette:{ popup:{ background:'#000' }, button:{ background:'#36d1dc', text:'#fff' } },
         theme:'classic', type:'opt-in',
@@ -177,8 +185,8 @@
           dismiss:'Allow cookies', deny:'Decline',
           link:'Privacy Policy', href:'/privacy.html'
         },
-        onInitialise:handleConsent,
-        onStatusChange:handleConsent
+        onInitialise: handleConsent,
+        onStatusChange: handleConsent
       });
       function handleConsent(){
         if(this.hasConsented()){
@@ -224,7 +232,7 @@
 
     <div class="generator">
       <input type="text" id="password" readonly placeholder="Your password"/>
-      <button id="copy" title="Copy"><svg viewBox="0 0 24 24"><path d="M19,21H9A2,2 0 0,1 7,19V7H9V19H19M16,3H5A2,2 0 0,0 3,5V17H5V5H16V3Z"/></svg></button>
+      <button id="copy" title="Copy to clipboard"><svg viewBox="0 0 24 24"><path d="M19,21H9A2,2 0 0,1 7,19V7H9V19H19M16,3H5A2,2 0 0,0 3,5V17H5V5H16V3Z"/></svg></button>
     </div>
     <button class="btn" id="generate">Generate</button>
     <div class="length-selector">
@@ -256,7 +264,7 @@
       navigator.clipboard.writeText(pwField.value);
       gtag('event','copy_password',{ event_category:'engagement' });
       copyBtn.textContent = '✔';
-      setTimeout(()=>{ copyBtn.innerHTML = `<svg viewBox="0 0 24 24"><path d="M19,21H9A2,2 0 0,1 7,19V7H9V19H19M16,3H5A2,2 0 0,0 3,5V17H5V5H16V3Z"/></svg>`; },1000);
+      setTimeout(()=>{ copyBtn.innerHTML = '<svg viewBox="0 0 24 24"><path d="M19,21H9A2,2 0 0,1 7,19V7H9V19H19M16,3H5A2,2 0 0,0 3,5V17H5V5H16V3Z"/></svg>'; },1000);
     };
   </script>
 </body>
