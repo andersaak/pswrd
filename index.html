@@ -5,6 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Secure Password Generator</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.css"/>
   <style>
     :root {
       --bg-light: linear-gradient(135deg, #72EDF2 0%, #5151E5 100%);
@@ -57,10 +59,7 @@
     .switch input { opacity: 0; width: 0; height: 0; }
     .slider-toggle {
       position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
+      top: 0; left: 0; right: 0; bottom: 0;
       background: rgba(255,255,255,0.5);
       border-radius: 34px;
       cursor: pointer;
@@ -69,16 +68,15 @@
     .slider-toggle:before {
       content: '';
       position: absolute;
-      width: 18px;
-      height: 18px;
-      left: 3px;
-      bottom: 3px;
+      width: 18px; height: 18px;
+      left: 3px; bottom: 3px;
       background: var(--slider-thumb);
       border-radius: 50%;
       transition: transform 0.4s;
     }
     input:checked + .slider-toggle { background: var(--accent-color); }
     input:checked + .slider-toggle:before { transform: translateX(26px); }
+
     .container {
       background: var(--glass-bg);
       border: 1px solid var(--glass-border);
@@ -89,7 +87,6 @@
       text-align: center;
       color: var(--color-light);
       box-shadow: 0 8px 32px rgba(31, 38, 135, 0.37);
-      position: relative;
       display: flex;
       flex-direction: column;
     }
@@ -148,8 +145,7 @@
     }
     #length {
       -webkit-appearance: none;
-      width: 70%;
-      height: 6px;
+      width: 70%; height: 6px;
       background: var(--slider-bg);
       border-radius: 3px;
       outline: none;
@@ -157,8 +153,7 @@
     }
     #length::-webkit-slider-thumb {
       -webkit-appearance: none;
-      width: 20px;
-      height: 20px;
+      width: 20px; height: 20px;
       background: var(--accent-color);
       cursor: pointer;
       border-radius: 50%;
@@ -175,73 +170,125 @@
     }
     footer a { color: var(--color-light); text-decoration: none; }
   </style>
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-JSQVTFQ0RF"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){ dataLayer.push(arguments); }
-  gtag('js', new Date());
-  gtag('config', 'G-JSQVTFQ0RF');
-</script>
-</head>
-</script>
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-JSQVTFQ0RF"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){ dataLayer.push(arguments); }
+    gtag('js', new Date());
+    gtag('config', 'G-JSQVTFQ0RF');
+  </script>
 </head>
 <body>
+  <!-- Cookie Consent -->
+  <script>
+    window.addEventListener("load", function(){
+      window.cookieconsent.initialise({
+        palette: {
+          popup: { background:"#000" },
+          button:{ background:"#36d1dc", text:"#fff" }
+        },
+        theme:"classic",
+        content:{
+          message:"We use cookies for analytics & ads.",
+          dismiss:"Got it",
+          link:"Privacy Policy",
+          href:"/privacy.html"
+        }
+      });
+    });
+  </script>
+
+  <!-- Dark/Light Mode Toggle -->
   <div class="mode-toggle">
-    <svg id="icon-moon" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 0110.21 3 7 7 0 1012 21a9 9 0 009-8.21z"/></svg>
+    <svg id="icon-moon" viewBox="0 0 24 24">
+      <path d="M21 12.79A9 9 0 0110.21 3 7 7 0 1012 21a9 9 0 009-8.21z"/>
+    </svg>
     <label class="switch">
       <input type="checkbox" id="themeToggle" />
       <span class="slider-toggle"></span>
     </label>
-    <svg id="icon-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/><g stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></g></svg>
+    <svg id="icon-sun" viewBox="0 0 24 24">
+      <circle cx="12" cy="12" r="5"/>
+      <g stroke="currentColor" stroke-width="2">
+        <line x1="12" y1="1" x2="12" y2="3"/>
+        <line x1="12" y1="21" x2="12" y2="23"/>
+        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
+        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+        <line x1="1" y1="12" x2="3" y2="12"/>
+        <line x1="21" y1="12" x2="23" y2="12"/>
+        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
+        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+      </g>
+    </svg>
   </div>
+
   <div class="container">
-    <script>
-      window.addEventListener("load", function(){
-        window.cookieconsent.initialise({
-          palette: { popup: { background:"#000" }, button:{ background:"#36d1dc", text:"#fff" } },
-          theme:"classic",
-          content:{ message:"We use cookies for analytics & ads.", dismiss:"Got it", link:"Privacy Policy", href:"/privacy.html" }
-        });
-      });
+    <!-- Google AdSense -->
+    <script data-ad-client="ca-pub-XXXXXXXXXXXXXXXX" async
+            src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js">
     </script>
-    <script data-ad-client="ca-pub-XXXXXXXXXXXXXXXX" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
     <h1>Secure Password Generator</h1>
     <h2>Create complex passwords instantly</h2>
     <p>Strong passwords combine length, complexity, and randomness to fend off attackers. Use at least 12 characters, mix cases, include numbers & symbols, and avoid predictable patterns.</p>
     <p>Protect your accounts and data from brute-force, dictionary attacks, and credential stuffing by using unique, strong passwords for every service.</p>
+
     <div class="generator">
       <input type="text" id="password" readonly placeholder="Your password" />
-      <button id="copy" title="Copy to clipboard"><svg viewBox="0 0 24 24"><path d="M19,21H9A2,2 0 0,1 7,19V7H9V19H19M16,3H5A2,2 0 0,0 3,5V17H5V5H16V3Z"/></svg></button>
+      <button id="copy" title="Copy to clipboard">
+        <svg viewBox="0 0 24 24">
+          <path d="M19,21H9A2,2 0 0,1 7,19V7H9V19H19M16,3H5A2,2 0 0,0 3,5V17H5V5H16V3Z"/>
+        </svg>
+      </button>
     </div>
+
     <button class="btn" id="generate">Generate</button>
+
     <div class="length-selector">
       <label for="length">Length: <span id="lengthValue">16</span></label>
       <input type="range" id="length" min="8" max="32" value="16" />
     </div>
-    <!-- Footer link moved inside container -->
+
     <footer>
       <a href="/privacy.html">Privacy Policy</a>
     </footer>
   </div>
+
   <script>
-    const body = document.body;
-    const toggle = document.getElementById('themeToggle');
-    toggle.addEventListener('change', () => body.classList.toggle('dark-mode'));
-    const passwordField = document.getElementById('password');
-    const generateBtn = document.getElementById('generate');
-    const lengthSlider = document.getElementById('length');
-    const lengthValue = document.getElementById('lengthValue');
-    const copyBtn = document.getElementById('copy');
+    // Dark/Light mode toggle
+    document.getElementById('themeToggle').addEventListener('change', e => {
+      document.body.classList.toggle('dark-mode');
+    });
+
+    // Password generator logic
     const charset = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()-_=+[]{}|;:,.<>?';
-    function gen(len) { return Array.from({length: len}, () => charset[Math.floor(Math.random()*charset.length)]).join(''); }
-    generateBtn.onclick = () => passwordField.value = gen(+lengthSlider.value);
-    lengthSlider.oninput = () => lengthValue.textContent = lengthSlider.value;
+    const passwordField = document.getElementById('password');
+    const generateBtn   = document.getElementById('generate');
+    const lengthSlider  = document.getElementById('length');
+    const lengthValue   = document.getElementById('lengthValue');
+    const copyBtn       = document.getElementById('copy');
+
+    function gen(len) {
+      return Array.from({length: len}, () =>
+        charset[Math.floor(Math.random() * charset.length)]
+      ).join('');
+    }
+
+    generateBtn.onclick = () => {
+      passwordField.value = gen(+lengthSlider.value);
+    };
+    lengthSlider.oninput = () => {
+      lengthValue.textContent = lengthSlider.value;
+    };
     copyBtn.onclick = () => {
       if (!passwordField.value) return;
       navigator.clipboard.writeText(passwordField.value);
       copyBtn.textContent = '✔';
-      setTimeout(() => copyBtn.innerHTML = '<svg viewBox="0 0 24 24"><path d="M19,21H9A2,2 0 0,1 7,19V7H9V19H19M16,3H5A2,2 0 0,0 3,5V17H5V5H16V3Z"/></svg>' , 1000);
+      setTimeout(() => {
+        copyBtn.innerHTML = '<svg viewBox="0 0 24 24"><path d="M19,21H9A2,2 0 0,1 7,19V7H9V19H19M16,3H5A2,2 0 0,0 3,5V17H5V5H16V3Z"/></svg>';
+      }, 1000);
     };
   </script>
 </body>
